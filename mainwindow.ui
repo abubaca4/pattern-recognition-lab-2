@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="file">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="open"/>
+    <addaction name="save_as"/>
+    <addaction name="exit"/>
+   </widget>
+   <widget class="QMenu" name="view">
+    <property name="title">
+     <string>Вид</string>
+    </property>
+    <addaction name="zome_in"/>
+    <addaction name="zome_out"/>
+    <addaction name="rotate"/>
+    <addaction name="prev"/>
+    <addaction name="next"/>
+   </widget>
+   <addaction name="file"/>
+   <addaction name="view"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="open"/>
+   <addaction name="zome_in"/>
+   <addaction name="zome_out"/>
+   <addaction name="prev"/>
+   <addaction name="next"/>
+   <addaction name="rotate"/>
+  </widget>
+  <action name="open">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/images/open-48.png</normaloff>:/images/open-48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Открыть</string>
+   </property>
+  </action>
+  <action name="save_as">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/images/save-48.png</normaloff>:/images/save-48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Сохранить как</string>
+   </property>
+  </action>
+  <action name="exit">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/images/close48.png</normaloff>:/images/close48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Выйти</string>
+   </property>
+  </action>
+  <action name="zome_in">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/images/plus-48.png</normaloff>:/images/plus-48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Приблизить</string>
+   </property>
+  </action>
+  <action name="zome_out">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/images/minus-48.png</normaloff>:/images/minus-48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Отдалить</string>
+   </property>
+  </action>
+  <action name="prev">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/images/left-48.png</normaloff>:/images/left-48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Предыдущий</string>
+   </property>
+  </action>
+  <action name="next">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/images/right-48.png</normaloff>:/images/right-48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Следующий</string>
+   </property>
+  </action>
+  <action name="rotate">
+   <property name="icon">
+    <iconset resource="mainwindow.qrc">
+     <normaloff>:/images/rotate-48.png</normaloff>:/images/rotate-48.png</iconset>
+   </property>
+   <property name="text">
+    <string>Поворот</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="mainwindow.qrc"/>
+ </resources>
+ <connections/>
+</ui>

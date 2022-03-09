@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="close48.png">images/icons8-close48.png</file>
+        <file alias="left-48.png">images/icons8-left-48.png</file>
+        <file alias="minus-48.png">images/icons8-minus-48.png</file>
+        <file alias="open-48.png">images/icons8-open-48.png</file>
+        <file alias="plus-48.png">images/icons8-plus-48.png</file>
+        <file alias="right-48.png">images/icons8-right-48.png</file>
+        <file alias="rotate-48.png">images/icons8-rotate-48.png</file>
+        <file alias="save-48.png">images/icons8-save-48.png</file>
+    </qresource>
+</RCC>
