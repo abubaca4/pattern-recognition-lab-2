@@ -41,8 +41,15 @@
     <addaction name="prev"/>
     <addaction name="next"/>
    </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Редактировать</string>
+    </property>
+    <addaction name="actionBlur"/>
+   </widget>
    <addaction name="file"/>
    <addaction name="view"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -56,11 +63,14 @@
     <bool>false</bool>
    </attribute>
    <addaction name="open"/>
+   <addaction name="separator"/>
    <addaction name="zome_in"/>
    <addaction name="zome_out"/>
    <addaction name="prev"/>
    <addaction name="next"/>
    <addaction name="rotate"/>
+   <addaction name="separator"/>
+   <addaction name="actionBlur"/>
   </widget>
   <action name="open">
    <property name="checkable">
@@ -138,6 +148,11 @@
    </property>
    <property name="text">
     <string>Поворот</string>
+   </property>
+  </action>
+  <action name="actionBlur">
+   <property name="text">
+    <string>Blur</string>
    </property>
   </action>
  </widget>

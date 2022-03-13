@@ -33,8 +33,7 @@ void MainWindow::on_open_triggered()
 
 void MainWindow::on_save_as_triggered()
 {
-    if (currentImage == nullptr) {
-        QMessageBox::information(this, "Сообщение", "Отсутсвует изображение для сохранения");
+    if (image_check_null()) {
         return;
     }
     QFileDialog dialog(this);
@@ -116,7 +115,7 @@ void MainWindow::showImage(QString path){
     imageScene.update();
     imageView.setSceneRect(image.rect());
     QString status = QString("%1, %2x%3, %4 Байт").arg(path).arg(image.width())
-        .arg(image.height()).arg(QFile(path).size());
+            .arg(image.height()).arg(QFile(path).size());
     ui->statusbar->showMessage(status);
 
     ui->prev->setEnabled(true);
@@ -131,4 +130,48 @@ void MainWindow::showImage(QString path){
         ui->prev->setEnabled(false);
     if (idx == fileNames.length() - 1)
         ui->next->setEnabled(false);
+}
+
+cv::Mat MainWindow::mat_from_pixmap(const QPixmap &in){
+    QImage image = in.toImage();
+    image = image.convertToFormat(QImage::Format_RGB888);
+    return cv::Mat(
+                image.height(),
+                image.width(),
+                CV_8UC3,
+                image.bits(),
+                image.bytesPerLine()).clone();
+}
+
+QPixmap MainWindow::pixmap_from_mat(const cv::Mat &in){
+    QImage image(
+                in.data,
+                in.cols,
+                in.rows,
+                in.step,
+                QImage::Format_RGB888);
+    return QPixmap::fromImage(image);
+}
+
+bool MainWindow::image_check_null(){
+    if (currentImage == nullptr) {
+        QMessageBox::information(this, "Сообщение", "Изображение отсутствует");
+    }
+    return currentImage == nullptr;
+}
+
+void MainWindow::on_actionBlur_triggered()
+{
+    if (image_check_null())
+        return;
+    cv::Mat mat = mat_from_pixmap(currentImage->pixmap());
+    cv::Mat tmp(mat.size(), mat.type());
+    cv::blur(mat, tmp, cv::Size(8, 8));
+    tmp.copyTo(mat);
+    QPixmap pixmap = pixmap_from_mat(mat);
+    imageScene.clear();
+    imageView.resetTransform();
+    currentImage = imageScene.addPixmap(pixmap);
+    imageScene.update();
+    imageView.setSceneRect(pixmap.rect());
 }

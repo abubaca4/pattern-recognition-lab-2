@@ -9,6 +9,8 @@
 #include <QMessageBox>
 #include <QRegularExpression>
 
+#include "opencv2/opencv.hpp"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -30,6 +32,7 @@ private slots:
     void on_prev_triggered();
     void on_next_triggered();
     void on_rotate_triggered();
+    void on_actionBlur_triggered();
 
 private:
     Ui::MainWindow *ui;
@@ -40,5 +43,8 @@ private:
     QGraphicsPixmapItem *currentImage;
 
     void showImage(QString path);
+    static cv::Mat mat_from_pixmap(const QPixmap &in);
+    static QPixmap pixmap_from_mat(const cv::Mat &in);
+    bool image_check_null();
 };
 #endif // MAINWINDOW_H
