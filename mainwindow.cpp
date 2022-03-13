@@ -133,8 +133,7 @@ void MainWindow::showImage(QString path){
 }
 
 cv::Mat MainWindow::mat_from_pixmap(const QPixmap &in){
-    QImage image = in.toImage();
-    image = image.convertToFormat(QImage::Format_RGB888);
+    QImage image = in.toImage().convertToFormat(QImage::Format_RGB888);
     return cv::Mat(
                 image.height(),
                 image.width(),
