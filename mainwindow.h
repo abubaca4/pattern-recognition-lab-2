@@ -8,8 +8,13 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QRegularExpression>
+#include <QDebug>
+#include <QMap>
+#include <QPluginLoader>
 
 #include "opencv2/opencv.hpp"
+
+#include "editor_plugin_interface.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -34,8 +39,11 @@ private slots:
     void on_rotate_triggered();
     void on_actionBlur_triggered();
 
+    void pluginPerform();
+
 private:
     Ui::MainWindow *ui;
+    QMap<QString, EditorPluginInterface*> editPlugins;
 
     QString currentImagePath;
     QGraphicsScene imageScene;
@@ -46,5 +54,7 @@ private:
     static cv::Mat mat_from_pixmap(const QPixmap &in);
     static QPixmap pixmap_from_mat(const cv::Mat &in);
     bool image_check_null();
+
+    void loadPlugins();
 };
 #endif // MAINWINDOW_H

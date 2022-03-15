@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(&imageView);
     currentImage = nullptr;
     currentImagePath = "";
+    loadPlugins();
 }
 
 MainWindow::~MainWindow()
@@ -167,6 +168,48 @@ void MainWindow::on_actionBlur_triggered()
     cv::Mat tmp(mat.size(), mat.type());
     cv::blur(mat, tmp, cv::Size(8, 8));
     tmp.copyTo(mat);
+    QPixmap pixmap = pixmap_from_mat(mat);
+    imageScene.clear();
+    imageView.resetTransform();
+    currentImage = imageScene.addPixmap(pixmap);
+    imageScene.update();
+    imageView.setSceneRect(pixmap.rect());
+}
+
+void MainWindow::loadPlugins()
+{
+    QDir pluginsDir(QApplication::instance()->applicationDirPath() + "/plugins");
+    QStringList nameFilters;
+    nameFilters << "*.so" << "*.dylib" << "*.dll";
+    QFileInfoList plugins = pluginsDir.entryInfoList(nameFilters, QDir::NoDotAndDotDot | QDir::Files, QDir::Name);
+    for(QFileInfo &plugin: plugins) {
+        QPluginLoader pluginLoader(plugin.absoluteFilePath(), this);
+        EditorPluginInterface *plugin_ptr = dynamic_cast<EditorPluginInterface*>(pluginLoader.instance());
+        if (plugin_ptr) {
+            QString name = "&" + plugin_ptr->name();
+            QAction *action = new QAction(name);
+            ui->menu_edit->addAction(action);
+            ui->toolBar_edit->addAction(action);
+            editPlugins[name] = plugin_ptr;
+            connect(action, SIGNAL(triggered(bool)), this, SLOT(pluginPerform()));
+        } else {
+            qDebug() << "Can't load plugin: " << plugin.absoluteFilePath();
+        }
+    }
+}
+
+void MainWindow::pluginPerform()
+{
+    if (image_check_null())
+        return;
+    QAction *active_action = qobject_cast<QAction*>(sender());
+    EditorPluginInterface *plugin_ptr = editPlugins[active_action->text()];
+    if (!plugin_ptr) {
+        QMessageBox::information(this, "information", "No plugin is found.");
+        return;
+    }
+    cv::Mat mat = mat_from_pixmap(currentImage->pixmap());
+    plugin_ptr->edit(mat, mat);
     QPixmap pixmap = pixmap_from_mat(mat);
     imageScene.clear();
     imageView.resetTransform();
