@@ -9,5 +9,5 @@ void ErodePlugin::edit(const cv::Mat &input, cv::Mat &output)
 {
     cv::Mat tmp(input.size(), input.type());
     cv::erode(input, tmp, cv::Mat());
-    output = tmp;
+    tmp.copyTo(output);
 }
