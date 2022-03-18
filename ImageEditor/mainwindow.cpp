@@ -209,7 +209,10 @@ void MainWindow::pluginPerform()
         return;
     }
     cv::Mat mat = mat_from_pixmap(currentImage->pixmap());
+    auto start = std::chrono::steady_clock::now();
     plugin_ptr->edit(mat, mat);
+    auto end = std::chrono::steady_clock::now();
+    ui->statusbar->showMessage(QString("%1 ns").arg(std::chrono::duration<long long, std::nano>(end - start).count()));
     QPixmap pixmap = pixmap_from_mat(mat);
     imageScene.clear();
     imageView.resetTransform();

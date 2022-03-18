@@ -12,6 +12,8 @@
 #include <QMap>
 #include <QPluginLoader>
 
+#include <chrono>
+
 #include "opencv2/opencv.hpp"
 
 #include "editor_plugin_interface.h"

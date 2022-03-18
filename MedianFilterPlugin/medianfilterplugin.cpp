@@ -85,13 +85,10 @@ void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
     result.copyTo(output);
 }
 
-void MedianFilterPlugin::uint8_sort(uint8_t &a, uint8_t &b){ //not found code for uint8_t without if for int is: int d = a - b; int m = ~(d >> 8); b += d&m; a -= d&m;
-    if(a > b)
-    {
-        uint8_t t = a;
-        a = b;
-        b = t;
-    }
+void MedianFilterPlugin::uint8_sort(uint8_t &a, uint8_t &b){ // bit found from https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax
+    uint8_t t = a;
+    a = a ^ ((b ^ a) & -(b < a));
+    b = b ^ ((b ^ t) & -(b < t));
 }
 
 void MedianFilterPlugin::uint8_3x3_core_sort(std::array<uint8_t, 9> &a){
