@@ -25,7 +25,7 @@
    </property>
    <widget class="QMenu" name="file">
     <property name="title">
-     <string>Файл</string>
+     <string>&amp;File</string>
     </property>
     <addaction name="open"/>
     <addaction name="save_as"/>
@@ -33,7 +33,7 @@
    </widget>
    <widget class="QMenu" name="view">
     <property name="title">
-     <string>Вид</string>
+     <string>&amp;View</string>
     </property>
     <addaction name="zome_in"/>
     <addaction name="zome_out"/>
@@ -43,7 +43,7 @@
    </widget>
    <widget class="QMenu" name="menu_edit">
     <property name="title">
-     <string>Редактировать</string>
+     <string>&amp;Edit</string>
     </property>
     <addaction name="actionreset"/>
     <addaction name="actionBlur"/>
