@@ -43,6 +43,8 @@ private slots:
 
     void pluginPerform();
 
+    void on_actionreset_triggered();
+
 private:
     Ui::MainWindow *ui;
     QMap<QString, EditorPluginInterface*> editPlugins;

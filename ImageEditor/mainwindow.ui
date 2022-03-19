@@ -45,6 +45,7 @@
     <property name="title">
      <string>Редактировать</string>
     </property>
+    <addaction name="actionreset"/>
     <addaction name="actionBlur"/>
    </widget>
    <addaction name="file"/>
@@ -173,6 +174,11 @@
   <action name="actionBlur">
    <property name="text">
     <string>Blur</string>
+   </property>
+  </action>
+  <action name="actionreset">
+   <property name="text">
+    <string>reset</string>
    </property>
   </action>
  </widget>

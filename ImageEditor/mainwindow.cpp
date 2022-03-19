@@ -220,3 +220,11 @@ void MainWindow::pluginPerform()
     imageScene.update();
     imageView.setSceneRect(pixmap.rect());
 }
+
+void MainWindow::on_actionreset_triggered()
+{
+    if (image_check_null())
+        return;
+    showImage(currentImagePath);
+}
+
