@@ -7,7 +7,7 @@ QString MedianFilterPlugin::name()
 
 void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
 {
-    cv::Mat result(input.rows, input.cols, CV_8UC3);
+    cv::Mat result(input.size(), input.type());
 
     std::array<std::array<uint8_t, 9>, 3> temp;
     int pixelInd = 0;
