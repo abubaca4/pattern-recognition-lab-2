@@ -61,9 +61,9 @@ void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
 }
 
 void MedianFilterPlugin::uint8_sort(uint8_t &a, uint8_t &b){ // bit found from https://graphics.stanford.edu/~seander/bithacks.html#IntegerMinOrMax
-    uint8_t t = a;
-    a = a ^ ((b ^ a) & -(b < a));
-    b = b ^ ((b ^ t) & -(b < t));
+    const uint8_t pre = ((b ^ a) & -(b < a));
+    a = a ^ pre;
+    b = b ^ pre;
 }
 
 void MedianFilterPlugin::uint8_3x3_core_sort(std::array<uint8_t, 9> &a){
