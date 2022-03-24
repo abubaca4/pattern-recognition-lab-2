@@ -6,6 +6,7 @@
 #include "editor_plugin_interface.h"
 
 #include <array>
+#include <utility>
 
 class MedianFilterPlugin : public QObject, public EditorPluginInterface
 {
