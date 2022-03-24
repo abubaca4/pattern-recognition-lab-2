@@ -44,18 +44,20 @@ void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
         }
     }
     // main part
-    for (int row = 1; row < input.rows - 1; row++){
-        for (int col = 1; col < input.cols - 1; col++){
-            cv::Vec3b &resultPixel = result.at<cv::Vec3b>(row, col);
-            for (auto i = 0; i < 3; i++){
-                std::array<int, 9> temp = {input.at<cv::Vec3b>(row - 1, col - 1)[i], input.at<cv::Vec3b>(row - 1, col)[i], input.at<cv::Vec3b>(row - 1, col + 1)[i],
-                                           input.at<cv::Vec3b>(row, col - 1)[i], input.at<cv::Vec3b>(row, col)[i], input.at<cv::Vec3b>(row, col + 1)[i],
-                                           input.at<cv::Vec3b>(row + 1, col - 1)[i], input.at<cv::Vec3b>(row + 1, col)[i], input.at<cv::Vec3b>(row + 1, col + 1)[i]};
-                uint8_3x3_core_sort(temp);
-                resultPixel[i] = temp[4];
+    cv::parallel_for_(cv::Range(1, input.rows - 1), [&](const cv::Range& range){
+        for (int row = range.start; row < range.end; row++){
+            for (int col = 1; col < input.cols - 1; col++){
+                cv::Vec3b &resultPixel = result.at<cv::Vec3b>(row, col);
+                for (auto i = 0; i < 3; i++){
+                    std::array<int, 9> temp = {input.at<cv::Vec3b>(row - 1, col - 1)[i], input.at<cv::Vec3b>(row - 1, col)[i], input.at<cv::Vec3b>(row - 1, col + 1)[i],
+                                               input.at<cv::Vec3b>(row, col - 1)[i], input.at<cv::Vec3b>(row, col)[i], input.at<cv::Vec3b>(row, col + 1)[i],
+                                               input.at<cv::Vec3b>(row + 1, col - 1)[i], input.at<cv::Vec3b>(row + 1, col)[i], input.at<cv::Vec3b>(row + 1, col + 1)[i]};
+                    uint8_3x3_core_sort(temp);
+                    resultPixel[i] = temp[4];
+                }
             }
         }
-    }
+    });
 
     result.copyTo(output);
 }
