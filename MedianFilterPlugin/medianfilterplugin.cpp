@@ -21,7 +21,7 @@ void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
         {
             cv::Vec3b &resultPixel = result.at<cv::Vec3b>(row, col.first);
             for (auto i = 0; i < 3; i++){
-                std::array<int, 9> temp = {input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row - 1, col.first)[i], input.at<cv::Vec3b>(row - 1, col.first + col.second)[i],
+                std::array<uint8_t, 9> temp = {input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row - 1, col.first)[i], input.at<cv::Vec3b>(row - 1, col.first + col.second)[i],
                                            input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row, col.first + col.second)[i],
                                            input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row + 1, col.first)[i], input.at<cv::Vec3b>(row + 1, col.first + col.second)[i]};
                 uint8_3x3_core_sort(temp);
@@ -35,7 +35,7 @@ void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
         {
             cv::Vec3b &resultPixel = result.at<cv::Vec3b>(row.first, col);
             for (auto i = 0; i < 3; i++){
-                std::array<int, 9> temp = {input.at<cv::Vec3b>(row.first, col)[i], input.at<cv::Vec3b>(row.first, col)[i], input.at<cv::Vec3b>(row.first, col)[i],
+                std::array<uint8_t, 9> temp = {input.at<cv::Vec3b>(row.first, col)[i], input.at<cv::Vec3b>(row.first, col)[i], input.at<cv::Vec3b>(row.first, col)[i],
                                            input.at<cv::Vec3b>(row.first, col - 1)[i], input.at<cv::Vec3b>(row.first, col)[i], input.at<cv::Vec3b>(row.first, col + 1)[i],
                                            input.at<cv::Vec3b>(row.first + row.second, col - 1)[i], input.at<cv::Vec3b>(row.first + row.second, col)[i], input.at<cv::Vec3b>(row.first + row.second, col + 1)[i]};
                 uint8_3x3_core_sort(temp);
@@ -49,7 +49,7 @@ void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
             for (int col = 1; col < input.cols - 1; col++){
                 cv::Vec3b &resultPixel = result.at<cv::Vec3b>(row, col);
                 for (auto i = 0; i < 3; i++){
-                    std::array<int, 9> temp = {input.at<cv::Vec3b>(row - 1, col - 1)[i], input.at<cv::Vec3b>(row - 1, col)[i], input.at<cv::Vec3b>(row - 1, col + 1)[i],
+                    std::array<uint8_t, 9> temp = {input.at<cv::Vec3b>(row - 1, col - 1)[i], input.at<cv::Vec3b>(row - 1, col)[i], input.at<cv::Vec3b>(row - 1, col + 1)[i],
                                                input.at<cv::Vec3b>(row, col - 1)[i], input.at<cv::Vec3b>(row, col)[i], input.at<cv::Vec3b>(row, col + 1)[i],
                                                input.at<cv::Vec3b>(row + 1, col - 1)[i], input.at<cv::Vec3b>(row + 1, col)[i], input.at<cv::Vec3b>(row + 1, col + 1)[i]};
                     uint8_3x3_core_sort(temp);
@@ -62,14 +62,13 @@ void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
     result.copyTo(output);
 }
 
-inline void MedianFilterPlugin::uint8_sort(int &a, int &b){
-    int d = a - b;
-    int m = ~(d >> 8);
-    b += d&m;
-    a -= d&m;
+inline void MedianFilterPlugin::uint8_sort(uint8_t &a, uint8_t &b){
+    uint8_t t = a;
+    a = std::min(t, b);
+    b = std::max(t, b);
 }
 
-inline void MedianFilterPlugin::uint8_3x3_core_sort(std::array<int, 9> &a){
+inline void MedianFilterPlugin::uint8_3x3_core_sort(std::array<uint8_t, 9> &a){
     uint8_sort(a[1], a[2]); uint8_sort(a[4], a[5]); uint8_sort(a[7], a[8]);
     uint8_sort(a[0], a[1]); uint8_sort(a[3], a[4]); uint8_sort(a[6], a[7]);
     uint8_sort(a[1], a[2]); uint8_sort(a[4], a[5]); uint8_sort(a[7], a[8]);
