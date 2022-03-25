@@ -22,8 +22,8 @@ void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
             cv::Vec3b &resultPixel = result(row, col.first);
             for (auto i = 0; i < 3; i++){
                 std::array<uint8_t, 9> temp = {input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row - 1, col.first)[i], input.at<cv::Vec3b>(row - 1, col.first + col.second)[i],
-                                           input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row, col.first + col.second)[i],
-                                           input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row + 1, col.first)[i], input.at<cv::Vec3b>(row + 1, col.first + col.second)[i]};
+                                               input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row, col.first + col.second)[i],
+                                               input.at<cv::Vec3b>(row, col.first)[i], input.at<cv::Vec3b>(row + 1, col.first)[i], input.at<cv::Vec3b>(row + 1, col.first + col.second)[i]};
                 uint8_3x3_core_sort(temp);
                 resultPixel[i] = temp[4];
             }
@@ -38,8 +38,8 @@ void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
             cv::Vec3b &resultPixel = result(row.first, col);
             for (auto i = 0; i < 3; i++){
                 std::array<uint8_t, 9> temp = {p1[col][i], p1[col][i], p1[col][i],
-                                           p1[col - 1][i], p1[col][i], p1[col + 1][i],
-                                           p2[col - 1][i], p2[col][i], p2[col + 1][i]};
+                                               p1[col - 1][i], p1[col][i], p1[col + 1][i],
+                                               p2[col - 1][i], p2[col][i], p2[col + 1][i]};
                 uint8_3x3_core_sort(temp);
                 resultPixel[i] = temp[4];
             }
@@ -55,8 +55,8 @@ void MedianFilterPlugin::edit(const cv::Mat &input, cv::Mat &output)
                 cv::Vec3b &resultPixel = result(row, col);
                 for (auto i = 0; i < 3; i++){
                     std::array<uint8_t, 9> temp = {p1[col - 1][i], p1[col][i], p1[col + 1][i],
-                                               p2[col - 1][i], p2[col][i], p2[col + 1][i],
-                                               p3[col - 1][i], p3[col][i], p3[col + 1][i],};
+                                                   p2[col - 1][i], p2[col][i], p2[col + 1][i],
+                                                   p3[col - 1][i], p3[col][i], p3[col + 1][i],};
                     uint8_3x3_core_sort(temp);
                     resultPixel[i] = temp[4];
                 }
