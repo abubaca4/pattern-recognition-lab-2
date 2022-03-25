@@ -21,7 +21,7 @@ public:
 
 private:
     static void uint8_sort(uint8_t  &a, uint8_t  &b);
-    static void uint8_3x3_core_sort(std::array<uint8_t , 9> &a);
+    static void uint8_3x3_core_sort(std::array<uint8_t, 9> &a);
 };
 
 #endif // ROTATEPLUGIN_H
